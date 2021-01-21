@@ -7,12 +7,16 @@ var engine, world;
 var stand1, stand1, ground1;
 var box1, box2, box3, box4, box5, box6, box7, box8, box9, box10, box11, box12, box13, box14, box15, box16, box17, box18;
 var polygon1, slingShot;
-
+var score = 0;
+var backgroundImg;
+var bg = "bg.jpg";
 var gameState = "on slingshot";
 
 
 function preload() {
   polygon1 = loadImage("polygon.png");
+  getBackgroundImg();
+  backgroundImg = loadImage("bg.jpg");
   
 }
 
@@ -26,7 +30,7 @@ function setup() {
   stand1 = new Ground(390,height - 100,200,20);
   stand2 = new Ground(650,height - 200,200,20);
   ground1 = new Ground(400,height + 50,800,20);
-
+ 
   box1 = new Box(330, 235, 30, 40);
   box2 = new Box(360, 235, 30, 40);
   box3 = new Box(390, 235, 30, 40);
@@ -59,11 +63,16 @@ function setup() {
 }
 
 function draw() {
+  if(backgroundImg) {
+    background(backgroundImg);
+}
   
   background("lightblue");
   noStroke();
   textSize(20);
   fill("white");
+  text("SCORE :" + score, 650, 40);
+  text("Press the space key for another chance!", 400, 380);
   
   text("Press the space key for another chance!", 400, 380);
 
@@ -71,41 +80,41 @@ function draw() {
 
   stroke("black");
 
- 
+  box1.score();
   box1.display();
- 
+  box2.score();
   box2.display();
-
+  box3.score();
   box3.display();
- 
+  box4.score();
   box4.display();
-  
+  box5.score();
   box5.display();
-
+  box6.score();
   box6.display();
-  
+  box7.score();
   box7.display();
- 
+  box8.score();
   box8.display();
- 
+  box9.score();
   box9.display();
-  
+  box10.score();
   box10.display();
-  
+  box11.score();
   box11.display();
-
+  box12.score();
   box12.display();
- 
+  box13.score();
   box13.display();
- 
+  box14.score();
   box14.display();
-  
+  box15.score();
   box15.display();
- 
+  box16.score();
   box16.display();
- 
+  box17.score();
   box17.display();
-  
+  box18.score();
   box18.display();
   stand1.display();
   stand2.display()
@@ -113,6 +122,8 @@ function draw() {
   polygon1.display();
   slingShot.display();
 }
+
+ 
 
 function mouseDragged(){
   if(gameState!=="launched"){
@@ -132,3 +143,16 @@ function keyPressed() {
   }
 }
 
+async function getBackgroundImg() {
+  var response = await fetch("https://worldtimeapi.org/api/timezone/Asia/Kolkata");
+  var responseJSON = await response.json();
+  var date = responseJSON.datetime;
+  var hour = date.slice(11, 13);
+  if(hour>=06 && hour<=19){
+      bg = "bg.jpg"
+  } else {
+      bg = "bg1.jpg"
+  }
+  backgroundImg = loadImage(bg);
+  console.log(backgroundImg);
+}
